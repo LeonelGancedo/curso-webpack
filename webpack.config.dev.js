@@ -10,7 +10,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
+    filename: '[name][contenthash].js',
     assetModuleFilename: 'assets/images/[hash][ext][query]'
   },
   mode: "development",
@@ -72,7 +72,9 @@ module.exports = {
       // El resultado de la transformación que va a poner en dist
       filename: './index.html'
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'assets/[name].[contenthash].css',
+    }),
     new CopyPlugin({
       patterns: [{
         // Lo que debo copiar
