@@ -5,6 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
 
 module.exports = {
   entry: './src/index.js',
@@ -14,6 +15,7 @@ module.exports = {
     assetModuleFilename: 'assets/images/[hash][ext][query]'
   },
   mode: "development",
+  devtool: 'source-map',
   // watch: true,
   resolve: {
     extensions: ['.js'],
@@ -85,5 +87,17 @@ module.exports = {
       }]
     }),
     new Dotenv(),
+    new BundleAnalyzerPlugin()
   ],
+  devServer : {
+    // Dirección donde va a tomar el archivo
+    static: path.join(__dirname, 'dist'),
+    //Comprimir los archivos
+    compress: true,
+    // Sirve para tener la historia de lo que sucede en el navegador
+    historyApiFallback: true,
+    // Puerto a utilizar
+    port: 8080,
+    open: true,
+  }
 }
